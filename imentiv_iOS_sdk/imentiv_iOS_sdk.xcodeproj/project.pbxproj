@@ -7,12 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D6D0A4C2CBF870F003C5490 /* EmoClassify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6D0A4B2CBF870F003C5490 /* EmoClassify.swift */; };
 		1DACF4D72CBD26B80000BC73 /* imentiv_iOS_sdk.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DACF4D62CBD26B80000BC73 /* imentiv_iOS_sdk.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1DACF4DE2CBD27190000BC73 /* ds.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 1DACF4DD2CBD27190000BC73 /* ds.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1D6D0A4B2CBF870F003C5490 /* EmoClassify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmoClassify.swift; sourceTree = "<group>"; };
 		1DACF4D32CBD26B80000BC73 /* imentiv_iOS_sdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = imentiv_iOS_sdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DACF4D62CBD26B80000BC73 /* imentiv_iOS_sdk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = imentiv_iOS_sdk.h; sourceTree = "<group>"; };
+		1DACF4DD2CBD27190000BC73 /* ds.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = ds.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,7 +49,9 @@
 		1DACF4D52CBD26B80000BC73 /* imentiv_iOS_sdk */ = {
 			isa = PBXGroup;
 			children = (
+				1DACF4DD2CBD27190000BC73 /* ds.mlmodel */,
 				1DACF4D62CBD26B80000BC73 /* imentiv_iOS_sdk.h */,
+				1D6D0A4B2CBF870F003C5490 /* EmoClassify.swift */,
 			);
 			path = imentiv_iOS_sdk;
 			sourceTree = "<group>";
@@ -129,6 +135,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DACF4DE2CBD27190000BC73 /* ds.mlmodel in Sources */,
+				1D6D0A4C2CBF870F003C5490 /* EmoClassify.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,6 +281,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need to access the camera";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -306,6 +315,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need to access the camera";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
