@@ -14,7 +14,7 @@
 
 /* Begin PBXFileReference section */
 		1D6D0A4B2CBF870F003C5490 /* EmoClassify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmoClassify.swift; sourceTree = "<group>"; };
-		1DACF4D32CBD26B80000BC73 /* imentiv_iOS_sdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = imentiv_iOS_sdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DACF4D32CBD26B80000BC73 /* imentiv.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = imentiv.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DACF4D62CBD26B80000BC73 /* imentiv_iOS_sdk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = imentiv_iOS_sdk.h; sourceTree = "<group>"; };
 		1DACF4DD2CBD27190000BC73 /* ds.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = ds.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -33,7 +33,7 @@
 		1DACF4C92CBD26B80000BC73 = {
 			isa = PBXGroup;
 			children = (
-				1DACF4D52CBD26B80000BC73 /* imentiv_iOS_sdk */,
+				1DACF4D52CBD26B80000BC73 /* imentiv */,
 				1DACF4D42CBD26B80000BC73 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,19 +41,19 @@
 		1DACF4D42CBD26B80000BC73 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1DACF4D32CBD26B80000BC73 /* imentiv_iOS_sdk.framework */,
+				1DACF4D32CBD26B80000BC73 /* imentiv.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		1DACF4D52CBD26B80000BC73 /* imentiv_iOS_sdk */ = {
+		1DACF4D52CBD26B80000BC73 /* imentiv */ = {
 			isa = PBXGroup;
 			children = (
 				1DACF4DD2CBD27190000BC73 /* ds.mlmodel */,
 				1DACF4D62CBD26B80000BC73 /* imentiv_iOS_sdk.h */,
 				1D6D0A4B2CBF870F003C5490 /* EmoClassify.swift */,
 			);
-			path = imentiv_iOS_sdk;
+			path = imentiv;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -70,9 +70,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		1DACF4D22CBD26B80000BC73 /* imentiv_iOS_sdk */ = {
+		1DACF4D22CBD26B80000BC73 /* imentiv */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1DACF4DA2CBD26B80000BC73 /* Build configuration list for PBXNativeTarget "imentiv_iOS_sdk" */;
+			buildConfigurationList = 1DACF4DA2CBD26B80000BC73 /* Build configuration list for PBXNativeTarget "imentiv" */;
 			buildPhases = (
 				1DACF4CE2CBD26B80000BC73 /* Headers */,
 				1DACF4CF2CBD26B80000BC73 /* Sources */,
@@ -83,9 +83,9 @@
 			);
 			dependencies = (
 			);
-			name = imentiv_iOS_sdk;
+			name = imentiv;
 			productName = imentiv_iOS_sdk;
-			productReference = 1DACF4D32CBD26B80000BC73 /* imentiv_iOS_sdk.framework */;
+			productReference = 1DACF4D32CBD26B80000BC73 /* imentiv.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -102,7 +102,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 1DACF4CD2CBD26B80000BC73 /* Build configuration list for PBXProject "imentiv_iOS_sdk" */;
+			buildConfigurationList = 1DACF4CD2CBD26B80000BC73 /* Build configuration list for PBXProject "imentiv" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -115,7 +115,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1DACF4D22CBD26B80000BC73 /* imentiv_iOS_sdk */,
+				1DACF4D22CBD26B80000BC73 /* imentiv */,
 			);
 		};
 /* End PBXProject section */
@@ -274,7 +274,7 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
+				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = LKHA6KZ5JR;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -308,7 +308,7 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
+				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = LKHA6KZ5JR;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -339,7 +339,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1DACF4CD2CBD26B80000BC73 /* Build configuration list for PBXProject "imentiv_iOS_sdk" */ = {
+		1DACF4CD2CBD26B80000BC73 /* Build configuration list for PBXProject "imentiv" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DACF4D82CBD26B80000BC73 /* Debug */,
@@ -348,7 +348,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1DACF4DA2CBD26B80000BC73 /* Build configuration list for PBXNativeTarget "imentiv_iOS_sdk" */ = {
+		1DACF4DA2CBD26B80000BC73 /* Build configuration list for PBXNativeTarget "imentiv" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DACF4DB2CBD26B80000BC73 /* Debug */,

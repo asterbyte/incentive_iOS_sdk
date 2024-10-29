@@ -31,7 +31,7 @@ public class CameraEmotionDetection: NSObject, AVCaptureVideoDataOutputSampleBuf
     
     public func getPredictedEmotion(completion: @escaping (String, Double) -> Void) {
         self.emotionCompletionHandler = completion
-        startCamera()
+        //startCamera()
     }
     
     func setupCamera() {

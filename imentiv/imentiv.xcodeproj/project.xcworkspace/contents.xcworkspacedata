@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:">
+      location = "self:/Users/aster/Documents/GitHub/imentiv_iOS_sdk/imentiv_iOS_sdk/imentiv.xcodeproj">
    </FileRef>
 </Workspace>
