@@ -10,6 +10,7 @@
 		1D6D0A4C2CBF870F003C5490 /* EmoClassify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6D0A4B2CBF870F003C5490 /* EmoClassify.swift */; };
 		1DACF4D72CBD26B80000BC73 /* imentiv_iOS_sdk.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DACF4D62CBD26B80000BC73 /* imentiv_iOS_sdk.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1DACF4DE2CBD27190000BC73 /* ds.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 1DACF4DD2CBD27190000BC73 /* ds.mlmodel */; };
+		1DD3A1AB2D01B48500A0D9E9 /* RepVGG_A0_EmotionDetector.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 1DD3A1AA2D01B48500A0D9E9 /* RepVGG_A0_EmotionDetector.mlpackage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -17,6 +18,7 @@
 		1DACF4D32CBD26B80000BC73 /* imentiv.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = imentiv.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DACF4D62CBD26B80000BC73 /* imentiv_iOS_sdk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = imentiv_iOS_sdk.h; sourceTree = "<group>"; };
 		1DACF4DD2CBD27190000BC73 /* ds.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = ds.mlmodel; sourceTree = "<group>"; };
+		1DD3A1AA2D01B48500A0D9E9 /* RepVGG_A0_EmotionDetector.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; name = RepVGG_A0_EmotionDetector.mlpackage; path = "../../../../../Desktop/ww/ios_emotion_models-main/RepVGG_A0_EmotionDetector.mlpackage"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +51,7 @@
 		1DACF4D52CBD26B80000BC73 /* imentiv */ = {
 			isa = PBXGroup;
 			children = (
+				1DD3A1AA2D01B48500A0D9E9 /* RepVGG_A0_EmotionDetector.mlpackage */,
 				1DACF4DD2CBD27190000BC73 /* ds.mlmodel */,
 				1DACF4D62CBD26B80000BC73 /* imentiv_iOS_sdk.h */,
 				1D6D0A4B2CBF870F003C5490 /* EmoClassify.swift */,
@@ -135,6 +138,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DD3A1AB2D01B48500A0D9E9 /* RepVGG_A0_EmotionDetector.mlpackage in Sources */,
 				1DACF4DE2CBD27190000BC73 /* ds.mlmodel in Sources */,
 				1D6D0A4C2CBF870F003C5490 /* EmoClassify.swift in Sources */,
 			);
