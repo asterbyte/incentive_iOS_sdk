@@ -25,6 +25,9 @@ public enum CameraPosition {
 }
 
 public class EmotionDetector: NSObject {
+    
+    private var temporaryEmotionArray: [[Float32]] = []
+    
     private let captureSession = AVCaptureSession()
     private var emotionCallback: ((String) -> Void)?
     private var emotionArrayCallback: ((MLMultiArray?) -> Void)?
@@ -37,10 +40,18 @@ public class EmotionDetector: NSObject {
         setupAudioSessionForBackground()
     }
 
+    private func convertMLMultiArrayToFloat32Array(_ multiArray: MLMultiArray) -> [Float32] {
+            let pointer = multiArray.dataPointer.bindMemory(to: Float32.self, capacity: multiArray.count)
+            return Array(UnsafeBufferPointer(start: pointer, count: multiArray.count))
+        }
+
+
+    
     /// Configures the camera and starts the feed
     
     public func startCamera(cameraPosition: CameraPosition = .front)
     {
+        temporaryEmotionArray.removeAll()
         setupCamera(cameraPosition: cameraPosition)
         DispatchQueue.global(qos: .userInitiated).async {
             self.captureSession.startRunning()
@@ -56,9 +67,99 @@ public class EmotionDetector: NSObject {
        }
 
     /// Stops the camera feed
-    public func stopCamera() {
+   /* public func stopCamera() {
         captureSession.stopRunning()
+       // print("Temporart \(temporaryEmotionArray)")
+        let emotions = ["anger", "contempt", "disgust", "fear", "happy", "neutral", "sad", "surprise"]
+
+        // Calculate the aggregate for each emotion
+        var aggregates = Array(repeating: 0.0, count: emotions.count)
+                for row in temporaryEmotionArray {
+                    for (index, value) in row.enumerated() {
+                        aggregates[index] += Double(value)
+                    }
+                }
+
+                // Print the aggregated results
+                for (index, emotion) in emotions.enumerated() {
+                    print("\(emotion): \(String(format: "%.4f", aggregates[index]))")
+                }
+        
+        if let maxIndex = aggregates.enumerated().max(by: { $0.element < $1.element })?.offset {
+               let dominantEmotion = emotions[maxIndex]
+               print("Dominant Emotion: \(dominantEmotion)")
+           }
+        
+    }*/
+    
+    // Selected Code
+   
+    /*public func stopCamera(onEmotionsProcessed: (([String: Double], String) -> Void)? = nil) {
+        // Stop the capture session
+        captureSession.stopRunning()
+
+        // Define the emotions array
+        let emotions = ["anger", "contempt", "disgust", "fear", "happy", "neutral", "sad", "surprise"]
+
+        // Initialize a dictionary to store aggregates for each emotion
+        var emotionAggregates = [String: Double]()
+        emotions.forEach { emotionAggregates[$0] = 0.0 }
+
+        // Calculate the aggregate for each emotion
+        for row in temporaryEmotionArray {
+            for (index, value) in row.enumerated() {
+                if index < emotions.count {
+                    emotionAggregates[emotions[index], default: 0.0] += Double(value)
+                }
+            }
+        }
+
+        // Determine the dominant emotion
+        let dominantEmotion = emotionAggregates.max(by: { $0.value < $1.value })?.key ?? "Unknown"
+
+        // Invoke the callback with the results
+        onEmotionsProcessed?(emotionAggregates, dominantEmotion)
     }
+     */
+    
+    public func stopCamera(onEmotionsProcessed: (([String: Double], String) -> Void)? = nil) {
+        // Stop the capture session
+        captureSession.stopRunning()
+
+        // Define the emotions array
+        let emotions = ["anger", "contempt", "disgust", "fear", "happy", "neutral", "sad", "surprise"]
+
+        // Initialize a dictionary to store aggregates for each emotion
+        var emotionAggregates = [String: Double]()
+        emotions.forEach { emotionAggregates[$0] = 0.0 }
+
+        // Calculate the aggregate for each emotion
+        for row in temporaryEmotionArray {
+            for (index, value) in row.enumerated() {
+                if index < emotions.count {
+                    // Scale the value to be between 0.0 and 10.0
+                    let scaledValue = min(max(Double(value), 0.0), 10.0) // Ensure value stays within bounds
+                    emotionAggregates[emotions[index], default: 0.0] += scaledValue
+                }
+            }
+        }
+
+        // Optionally, you can normalize the values so that the sum doesn't exceed 10.0
+        let total = emotionAggregates.values.reduce(0.0, +)
+        if total > 0 {
+            emotions.forEach { emotion in
+                emotionAggregates[emotion] = (emotionAggregates[emotion]! / total) * 10.0
+            }
+        }
+
+        // Determine the dominant emotion
+        let dominantEmotion = emotionAggregates.max(by: { $0.value < $1.value })?.key ?? "Unknown"
+
+        // Invoke the callback with the results
+        onEmotionsProcessed?(emotionAggregates, dominantEmotion)
+    }
+
+
 
     // MARK: - Background Support
     
@@ -106,7 +207,7 @@ public class EmotionDetector: NSObject {
 
         let request = VNDetectFaceRectanglesRequest { [weak self] request, error in
             guard let results = request.results as? [VNFaceObservation], let face = results.first else {
-                print("No faces detected.")
+               // print(")
                 self?.isProcessing = false // Reset here if no face is found
                 return
             }
@@ -117,7 +218,7 @@ public class EmotionDetector: NSObject {
         do {
             try handler.perform([request])
         } catch {
-            print("Face detection failed: \(error.localizedDescription)")
+          //  print("Face detection failed: \(error.localizedDescription)")
             isProcessing = false // Reset here in case of an error
         }
     }
@@ -155,6 +256,10 @@ public class EmotionDetector: NSObject {
             let emotionLabels = ["anger", "contempt", "disgust", "fear", "happy", "neutral", "sad", "surprise"]
             let emotionIndex = argmax(array: output.var_455)
             let emotion = emotionLabels[emotionIndex]
+            // Convert MLMultiArray to [Float32]
+            let flatArray = convertMLMultiArrayToFloat32Array(output.var_455)
+                      temporaryEmotionArray.append(flatArray)
+            
 
             DispatchQueue.main.async {
                 self.emotionCallback?(emotion)
