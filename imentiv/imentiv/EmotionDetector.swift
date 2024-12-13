@@ -26,6 +26,7 @@ public enum CameraPosition {
 
 public class EmotionDetector: NSObject {
     private var emptyFaceCount : Int = 0
+    private var dominantEmotion : String = ""
     private var temporaryEmotionArray: [[Float32]] = []
     
     private let captureSession = AVCaptureSession()
@@ -52,6 +53,7 @@ public class EmotionDetector: NSObject {
     public func startEmotionsCapture(cameraPosition: CameraPosition = .front)
     {
         emptyFaceCount = 0
+        dominantEmotion = ""
         temporaryEmotionArray.removeAll()
         setupCamera(cameraPosition: cameraPosition)
         DispatchQueue.global(qos: .userInitiated).async {
@@ -196,10 +198,15 @@ public class EmotionDetector: NSObject {
             emotions.forEach { emotion in
                 emotionAggregates[emotion] = emotionAggregates[emotion]! / total
             }
+            let dominantEmotion = emotionAggregates.max(by: { $0.value < $1.value })?.key ?? "Unknown"
+        }
+        else
+        {
+             dominantEmotion = "unknown"
         }
 
         // Determine the dominant emotion
-        let dominantEmotion = emotionAggregates.max(by: { $0.value < $1.value })?.key ?? "Unknown"
+       // let dominantEmotion = emotionAggregates.max(by: { $0.value < $1.value })?.key ?? "Unknown"
         
 
         // Invoke the callback with the results
@@ -236,10 +243,16 @@ public class EmotionDetector: NSObject {
             emotions.forEach { emotion in
                 emotionAggregates[emotion] = emotionAggregates[emotion]! / total
             }
+            let dominantEmotion = emotionAggregates.max(by: { $0.value < $1.value })?.key ?? "Unknown"
+        }
+        else
+        {
+            dominantEmotion = "unknown"
         }
 
+       
         // Determine the dominant emotion
-        let dominantEmotion = emotionAggregates.max(by: { $0.value < $1.value })?.key ?? "Unknown"
+       // let dominantEmotion = emotionAggregates.max(by: { $0.value < $1.value })?.key ?? "Unknown"
         
         let totalFrames = temporaryEmotionArray.count + emptyFaceCount
 
@@ -277,10 +290,15 @@ public class EmotionDetector: NSObject {
             emotions.forEach { emotion in
                 emotionAggregates[emotion] = emotionAggregates[emotion]! / total
             }
+            // Determine the dominant emotion
+            dominantEmotion = emotionAggregates.max(by: { $0.value < $1.value })?.key ?? "Unknown"
+        }
+        else
+        {
+             dominantEmotion = "unknown"
         }
 
-        // Determine the dominant emotion
-        let dominantEmotion = emotionAggregates.max(by: { $0.value < $1.value })?.key ?? "Unknown"
+    
         
         let totalFaceDetectFrameCount = temporaryEmotionArray.count
         
@@ -312,7 +330,7 @@ public class EmotionDetector: NSObject {
         guard let device = deviceDiscoverySession.devices.first,
               let deviceInput = try? AVCaptureDeviceInput(device: device),
               captureSession.canAddInput(deviceInput) else {
-            print("Failed to configure camera.")
+           // print("Failed to configure camera.")
             return
         }
 
@@ -338,7 +356,7 @@ public class EmotionDetector: NSObject {
         let request = VNDetectFaceRectanglesRequest { [weak self] request, error in
             guard let results = request.results as? [VNFaceObservation], let face = results.first else {
                 self?.emptyFaceCount = self!.emptyFaceCount + 1
-                print("No face \(self?.emptyFaceCount)")
+               // print("No face \(self?.emptyFaceCount)")
                 self?.isProcessing = false // Reset here if no face is found
                 return
             }
