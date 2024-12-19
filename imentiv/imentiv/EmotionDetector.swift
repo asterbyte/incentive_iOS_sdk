@@ -87,6 +87,51 @@ public class EmotionDetector: NSObject {
         onEmotionsProcessed?(emotionAggregates, dominantEmotion, totalFramesCalculted)
     }
     
+    public func getAggregatedEmotions(onEmotionsProcessed: (([String: Double], String) -> Void)? = nil)
+    {
+        let emotions = ["anger", "contempt", "disgust", "fear", "happy", "neutral", "sad", "surprise"]
+        var intermediateEmotionArray: [[Float32]] = []
+        intermediateEmotionArray.removeAll()
+        intermediateEmotionArray = temporaryEmotionArray
+        var emotionAggregates = [String: Double]()
+        emotions.forEach { emotionAggregates[$0] = 0.0 }
+
+        // Calculate the aggregate for each emotion
+        for row in intermediateEmotionArray {
+            for (index, value) in row.enumerated() {
+                if index < emotions.count {
+                    // Scale the value to be between 0.0 and 1.0 (originally between 0.0 and 10.0)
+                    let scaledValue = min(max(Double(value), 0.0), 10.0) / 10.0 // Scale between 0.0 and 1.0
+                    emotionAggregates[emotions[index], default: 0.0] += scaledValue
+                }
+            }
+        }
+        // Normalize the values so that the sum doesn't exceed 1.0
+        let total = emotionAggregates.values.reduce(0.0, +)
+        if total > 0 {
+            emotions.forEach { emotion in
+                emotionAggregates[emotion] = emotionAggregates[emotion]! / total
+            }
+            // Determine the dominant emotion
+            dominantEmotion = emotionAggregates.max(by: { $0.value < $1.value })?.key ?? "Unknown"
+        }
+        else
+        {
+             dominantEmotion = "unknown"
+        }
+        
+        onEmotionsProcessed?(emotionAggregates, dominantEmotion)
+    }
+    
+    
+    public func resetAll()
+    {
+        temporaryEmotionArray.removeAll()
+        emptyFaceCount = 0
+        dominantEmotion = ""
+        
+    }
+    
     public func startEmotionsCapture(cameraPosition: CameraPosition = .front)
     {
         emptyFaceCount = 0
