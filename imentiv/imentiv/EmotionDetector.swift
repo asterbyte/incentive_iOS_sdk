@@ -35,6 +35,10 @@ public class EmotionDetector: NSObject {
     private let videoDataOutput = AVCaptureVideoDataOutput()
     private let model = try! RepVGG_A0_EmotionDetector()
     private var isProcessing = false
+    private var cameraState: Bool = false
+    public var isCameraState: Bool {
+           return cameraState
+    }
 
     public override init() {
         super.init()
@@ -140,6 +144,7 @@ public class EmotionDetector: NSObject {
         setupCamera(cameraPosition: cameraPosition)
         DispatchQueue.global(qos: .userInitiated).async {
             self.captureSession.startRunning()
+            self.cameraState = true
         }
     }
     
@@ -253,6 +258,7 @@ public class EmotionDetector: NSObject {
     public func stopEmotionsCapture(onEmotionsProcessed: (([String: Double], String) -> Void)? = nil) {
         // Stop the capture session
         captureSession.stopRunning()
+        cameraState = false
         
         print("Total Empty Face count\(emptyFaceCount)")
 
@@ -298,7 +304,7 @@ public class EmotionDetector: NSObject {
     public func stopEmotionsCapture(onEmotionsProcessed: (([String: Double], String, _ totalFrames: Int) -> Void)? = nil) {
         // Stop the capture session
         captureSession.stopRunning()
-        
+        cameraState = false
         print("Total Empty Face count\(emptyFaceCount)")
 
         // Define the emotions array
@@ -345,7 +351,7 @@ public class EmotionDetector: NSObject {
     public func stopEmotionsCapture(onEmotionsProcessed: (([String: Double], String, _ totalFrames: Int, _ totalFaceDetectFrameCount: Int) -> Void)? = nil) {
         // Stop the capture session
         captureSession.stopRunning()
-        
+        cameraState = false
         print("Total Empty Face count\(emptyFaceCount)")
 
         // Define the emotions array
