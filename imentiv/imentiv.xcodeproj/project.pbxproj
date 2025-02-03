@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D64A88F2D50C47800A7DEFC /* EmotionClassify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D64A88E2D50C47800A7DEFC /* EmotionClassify.swift */; };
 		1D6D0A4C2CBF870F003C5490 /* EmoClassify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6D0A4B2CBF870F003C5490 /* EmoClassify.swift */; };
 		1DACF4D72CBD26B80000BC73 /* imentiv_iOS_sdk.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DACF4D62CBD26B80000BC73 /* imentiv_iOS_sdk.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1DACF4DE2CBD27190000BC73 /* ds.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 1DACF4DD2CBD27190000BC73 /* ds.mlmodel */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1D64A88E2D50C47800A7DEFC /* EmotionClassify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionClassify.swift; sourceTree = "<group>"; };
 		1D6D0A4B2CBF870F003C5490 /* EmoClassify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmoClassify.swift; sourceTree = "<group>"; };
 		1DACF4D32CBD26B80000BC73 /* imentiv.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = imentiv.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DACF4D62CBD26B80000BC73 /* imentiv_iOS_sdk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = imentiv_iOS_sdk.h; sourceTree = "<group>"; };
@@ -58,6 +60,7 @@
 				1DACF4D62CBD26B80000BC73 /* imentiv_iOS_sdk.h */,
 				1D6D0A4B2CBF870F003C5490 /* EmoClassify.swift */,
 				1DD3A1AC2D01B4D800A0D9E9 /* EmotionDetector.swift */,
+				1D64A88E2D50C47800A7DEFC /* EmotionClassify.swift */,
 			);
 			path = imentiv;
 			sourceTree = "<group>";
@@ -144,6 +147,7 @@
 				1DD3A1AB2D01B48500A0D9E9 /* RepVGG_A0_EmotionDetector.mlpackage in Sources */,
 				1DD3A1AD2D01B4D800A0D9E9 /* EmotionDetector.swift in Sources */,
 				1DACF4DE2CBD27190000BC73 /* ds.mlmodel in Sources */,
+				1D64A88F2D50C47800A7DEFC /* EmotionClassify.swift in Sources */,
 				1D6D0A4C2CBF870F003C5490 /* EmoClassify.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

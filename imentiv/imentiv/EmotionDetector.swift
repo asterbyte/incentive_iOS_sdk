@@ -155,132 +155,22 @@ public class EmotionDetector: NSObject {
     public func detectedEmotionArray(values: @escaping (MLMultiArray?) -> Void) {
         emotionArrayCallback = values
        }
-
-    /// Stops the camera feed
-   /* public func stopCamera() {
-        captureSession.stopRunning()
-       // print("Temporart \(temporaryEmotionArray)")
-        let emotions = ["anger", "contempt", "disgust", "fear", "happy", "neutral", "sad", "surprise"]
-
-        // Calculate the aggregate for each emotion
-        var aggregates = Array(repeating: 0.0, count: emotions.count)
-                for row in temporaryEmotionArray {
-                    for (index, value) in row.enumerated() {
-                        aggregates[index] += Double(value)
-                    }
-                }
-
-                // Print the aggregated results
-                for (index, emotion) in emotions.enumerated() {
-                    print("\(emotion): \(String(format: "%.4f", aggregates[index]))")
-                }
-        
-        if let maxIndex = aggregates.enumerated().max(by: { $0.element < $1.element })?.offset {
-               let dominantEmotion = emotions[maxIndex]
-               print("Dominant Emotion: \(dominantEmotion)")
-           }
-        
-    }*/
-    
-    // Selected Code
-   
-    /*public func stopCamera(onEmotionsProcessed: (([String: Double], String) -> Void)? = nil) {
-        // Stop the capture session
-        captureSession.stopRunning()
-
-        // Define the emotions array
-        let emotions = ["anger", "contempt", "disgust", "fear", "happy", "neutral", "sad", "surprise"]
-
-        // Initialize a dictionary to store aggregates for each emotion
-        var emotionAggregates = [String: Double]()
-        emotions.forEach { emotionAggregates[$0] = 0.0 }
-
-        // Calculate the aggregate for each emotion
-        for row in temporaryEmotionArray {
-            for (index, value) in row.enumerated() {
-                if index < emotions.count {
-                    emotionAggregates[emotions[index], default: 0.0] += Double(value)
-                }
-            }
-        }
-
-        // Determine the dominant emotion
-        let dominantEmotion = emotionAggregates.max(by: { $0.value < $1.value })?.key ?? "Unknown"
-
-        // Invoke the callback with the results
-        onEmotionsProcessed?(emotionAggregates, dominantEmotion)
-    }
-     */
-    
-    
-    /*
-     
-    0 to 10
-     
-    public func stopEmotionsCapture(onEmotionsProcessed: (([String: Double], String) -> Void)? = nil) {
-        // Stop the capture session
-        captureSession.stopRunning()
-
-        // Define the emotions array
-        let emotions = ["anger", "contempt", "disgust", "fear", "happy", "neutral", "sad", "surprise"]
-
-        // Initialize a dictionary to store aggregates for each emotion
-        var emotionAggregates = [String: Double]()
-        emotions.forEach { emotionAggregates[$0] = 0.0 }
-
-        // Calculate the aggregate for each emotion
-        for row in temporaryEmotionArray {
-            for (index, value) in row.enumerated() {
-                if index < emotions.count {
-                    // Scale the value to be between 0.0 and 10.0
-                    let scaledValue = min(max(Double(value), 0.0), 10.0) // Ensure value stays within bounds
-                    emotionAggregates[emotions[index], default: 0.0] += scaledValue
-                }
-            }
-        }
-
-        // Optionally, you can normalize the values so that the sum doesn't exceed 10.0
-        let total = emotionAggregates.values.reduce(0.0, +)
-        if total > 0 {
-            emotions.forEach { emotion in
-                emotionAggregates[emotion] = (emotionAggregates[emotion]! / total) * 10.0
-            }
-        }
-
-        // Determine the dominant emotion
-        let dominantEmotion = emotionAggregates.max(by: { $0.value < $1.value })?.key ?? "Unknown"
-
-        // Invoke the callback with the results
-        onEmotionsProcessed?(emotionAggregates, dominantEmotion)
-    }*/
-
     
     public func stopEmotionsCapture(onEmotionsProcessed: (([String: Double], String) -> Void)? = nil) {
-        // Stop the capture session
         captureSession.stopRunning()
         cameraState = false
-        
         print("Total Empty Face count\(emptyFaceCount)")
-
-        // Define the emotions array
         let emotions = ["anger", "contempt", "disgust", "fear", "happy", "neutral", "sad", "surprise"]
-
-        // Initialize a dictionary to store aggregates for each emotion
         var emotionAggregates = [String: Double]()
         emotions.forEach { emotionAggregates[$0] = 0.0 }
-
-        // Calculate the aggregate for each emotion
         for row in temporaryEmotionArray {
             for (index, value) in row.enumerated() {
                 if index < emotions.count {
-                    // Scale the value to be between 0.0 and 1.0 (originally between 0.0 and 10.0)
-                    let scaledValue = min(max(Double(value), 0.0), 10.0) / 10.0 // Scale between 0.0 and 1.0
+                    let scaledValue = min(max(Double(value), 0.0), 10.0) / 10.0
                     emotionAggregates[emotions[index], default: 0.0] += scaledValue
                 }
             }
         }
-
-        // Normalize the values so that the sum doesn't exceed 1.0
         let total = emotionAggregates.values.reduce(0.0, +)
         if total > 0 {
             emotions.forEach { emotion in
@@ -292,40 +182,24 @@ public class EmotionDetector: NSObject {
         {
              dominantEmotion = "unknown"
         }
-
-        // Determine the dominant emotion
-       // let dominantEmotion = emotionAggregates.max(by: { $0.value < $1.value })?.key ?? "Unknown"
-        
-
-        // Invoke the callback with the results
         onEmotionsProcessed?(emotionAggregates, dominantEmotion)
     }
     
     public func stopEmotionsCapture(onEmotionsProcessed: (([String: Double], String, _ totalFrames: Int) -> Void)? = nil) {
-        // Stop the capture session
         captureSession.stopRunning()
         cameraState = false
         print("Total Empty Face count\(emptyFaceCount)")
-
-        // Define the emotions array
         let emotions = ["anger", "contempt", "disgust", "fear", "happy", "neutral", "sad", "surprise"]
-
-        // Initialize a dictionary to store aggregates for each emotion
         var emotionAggregates = [String: Double]()
         emotions.forEach { emotionAggregates[$0] = 0.0 }
-
-        // Calculate the aggregate for each emotion
         for row in temporaryEmotionArray {
             for (index, value) in row.enumerated() {
                 if index < emotions.count {
-                    // Scale the value to be between 0.0 and 1.0 (originally between 0.0 and 10.0)
-                    let scaledValue = min(max(Double(value), 0.0), 10.0) / 10.0 // Scale between 0.0 and 1.0
+                    let scaledValue = min(max(Double(value), 0.0), 10.0) / 10.0
                     emotionAggregates[emotions[index], default: 0.0] += scaledValue
                 }
             }
         }
-
-        // Normalize the values so that the sum doesn't exceed 1.0
         let total = emotionAggregates.values.reduce(0.0, +)
         if total > 0 {
             emotions.forEach { emotion in
@@ -337,14 +211,7 @@ public class EmotionDetector: NSObject {
         {
             dominantEmotion = "unknown"
         }
-
-       
-        // Determine the dominant emotion
-       // let dominantEmotion = emotionAggregates.max(by: { $0.value < $1.value })?.key ?? "Unknown"
-        
         let totalFrames = temporaryEmotionArray.count + emptyFaceCount
-
-        // Invoke the callback with the results
         onEmotionsProcessed?(emotionAggregates, dominantEmotion, totalFrames)
     }
 
