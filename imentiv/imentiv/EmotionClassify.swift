@@ -216,7 +216,6 @@ public class EmotionClassify {
         }
     }
     
-    /// Crops a face from the image based on the bounding box.
     private func cropFace(from image: UIImage, boundingBox: CGRect) -> UIImage? {
         let imageSize = image.size
         let convertedBoundingBox = CGRect(
@@ -241,14 +240,50 @@ public class EmotionClassify {
         return normalizedImage(from: cgImage, scale: image.scale, orientation: image.imageOrientation)
     }
     
+    /// Crops a face from the image based on the bounding box.
+   /* private func cropFace(from image: UIImage, boundingBox: CGRect) -> UIImage? {
+        let imageSize = image.size
+        let convertedBoundingBox = CGRect(
+            x: boundingBox.origin.x,
+            y: boundingBox.origin.y,
+            width: boundingBox.width,
+            height: boundingBox.height
+        )
+        
+        // Ensure the crop is within image bounds
+        let adjustedBoundingBox = CGRect(
+            x: max(0, convertedBoundingBox.origin.x),
+            y: max(0, convertedBoundingBox.origin.y),
+            width: min(imageSize.width - convertedBoundingBox.origin.x, convertedBoundingBox.width),
+            height: min(imageSize.height - convertedBoundingBox.origin.y, convertedBoundingBox.height)
+        )
+        
+        guard let cgImage = image.cgImage?.cropping(to: adjustedBoundingBox) else {
+            return nil
+        }
+        
+        return normalizedImage(from: cgImage, scale: image.scale, orientation: image.imageOrientation)
+    }*/
+    
     /// Transforms Vision's normalized bounding box to image coordinates.
-    private func transformBoundingBox(_ boundingBox: CGRect, for imageSize: CGSize) -> CGRect {
+   /* private func transformBoundingBox(_ boundingBox: CGRect, for imageSize: CGSize) -> CGRect {
         return CGRect(
             x: boundingBox.origin.x * imageSize.width,
             y: (1.0 - boundingBox.origin.y) * imageSize.height - (boundingBox.height * imageSize.height),
             width: boundingBox.width * imageSize.width,
             height: boundingBox.height * imageSize.height
         )
+    }*/
+    private func transformBoundingBox(_ boundingBox: CGRect, for imageSize: CGSize) -> CGRect {
+        // Vision's bounding box is normalized (0 to 1) and has its origin at the bottom-left.
+        // UIKit's coordinate system has its origin at the top-left.
+        
+        let width = boundingBox.width * imageSize.width
+        let height = boundingBox.height * imageSize.height
+        let x = boundingBox.origin.x * imageSize.width
+        let y = (1 - boundingBox.origin.y - boundingBox.height) * imageSize.height
+        
+        return CGRect(x: x, y: y, width: width, height: height)
     }
     
     /// Predicts the emotion for a given face image.
