@@ -156,6 +156,7 @@ import CoreML
 public class EmotionClassify {
     
     private let model: RepVGG_A0_EmotionDetector
+    private var emotionArrayCallback: ((MLMultiArray?) -> Void)?
     
     public init() throws {
         // Initialize the emotion detection model
@@ -188,6 +189,10 @@ public class EmotionClassify {
             }
         }
     }
+    
+    public func detectedEmotionArray(values: @escaping (MLMultiArray?) -> Void) {
+        emotionArrayCallback = values
+       }
     
     /// Processes detected faces, crops them, and predicts emotions.
     private func processFaces(in image: UIImage, observations: [VNFaceObservation], completion: @escaping ([(boundingBox: CGRect, emotion: String, faceImage: UIImage?)]) -> Void) {
@@ -298,6 +303,9 @@ public class EmotionClassify {
             let emotionLabels = ["anger", "contempt", "disgust", "fear", "happy", "neutral", "sad", "surprise"]
             let emotionIndex = argmax(array: output.var_455)
             let emotion = emotionLabels[emotionIndex]
+            DispatchQueue.main.async {
+                self.emotionArrayCallback?(output.var_455)
+            }
             completion(emotion)
         } catch {
             completion("error")
